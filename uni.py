@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-# encoding=utf-8
+# coding=utf-8
 
 import os
 import sys
 
-def courses():
+UNI_DIR = os.getenv("HOME") + "/Documents/uni"
 
 
