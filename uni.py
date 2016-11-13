@@ -10,6 +10,7 @@ import course
 UNI_DIR = os.getenv("HOME") + "/Documents/uni"
 COURSE_FOLDERS = []
 LINE = "-" * 79
+WORKING = 1
 OPTION_LIST = """\
 [l] - list courses
 [c] - create new course
@@ -65,7 +66,6 @@ def list_courses():
     else:
         for x in COURSE_FOLDERS:
             print(x)
-    print(LINE)
 
 print(LINE)
 print("Welcome sir!")
@@ -81,28 +81,36 @@ for x in COURSE_FOLDERS:
     COURSES[x] = course.Course(UNI_DIR, x)
 
 while True:
+    print(LINE)
     print("How can I help you sir?")
     USER_IN = input("Enter command: ")
     if USER_IN == "l":
         list_courses()
     elif USER_IN == "c":
+        print(LINE)
+        print("Which course would you like to add?")
         COURSE_NAME = input("Enter course name: ")
         COURSES[COURSE_NAME] = course.Course(UNI_DIR, COURSE_NAME)
         COURSES[COURSE_NAME].new_course()
         update_folders()
     elif USER_IN == "w":
-        print("Which course would you like to work on?")
-        list_courses()
-        WORK_ON = input("Enter course name: ")
-        for x in COURSES:
-            if x == WORK_ON:
-                COURSES[x].work()
+        while WORKING == 1:
+            print(LINE)
+            print("Which course would you like to work on?")
+            list_courses()
+            print(LINE)
+            WORK_ON = input("Enter course name: ")
+            for x in COURSES:
+                if x == WORK_ON:
+                    COURSES[x].work()
+                    WORKING = 0
+            if WORKING == 1:
+                print("Sorry no course named '" + WORK_ON + "' found.")
     elif USER_IN == "q":
         goodbye()
     else:
         print(LINE)
         print("Sorry I don't know that command sir.")
         print(OPTION_LIST)
-        print(LINE)
 
 

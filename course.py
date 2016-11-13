@@ -40,9 +40,14 @@ class Course:
         header = work_layout_file.read()
         work_layout_file.close()
 
-        note_file = open(self.directory + "/notes/" + self.name + ".md", "a")
-        note_file.write(header.format(self.current_time()))
-        note_file.close()
+        if os.path.exists(self.note_file) == False:
+            note_in = open(self.note_file, "w")
+            note_in.write(header.format(self.name.title(), self.current_time()))
+            note_in.close()
+        else:
+            note_file = open(self.directory + "/notes/" + self.name + ".md", "a")
+            note_file.write(header.format(self.current_time()))
+            note_file.close()
 
         subprocess.call(["vim", self.note_file])
 
