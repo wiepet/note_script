@@ -13,7 +13,8 @@ LINE = "-" * 79
 WORKING = 1
 OPTION_LIST = """\
 [l] - list courses
-[c] - create new course
+[n] - create new course
+[c] - copies all files from downloads to course
 [w] - work on existing course
 [q] - quit program"""
 
@@ -81,6 +82,22 @@ def create_course():
     COURSES[COURSE_NAME].new_course()
     update_folders()
 
+def copy_to_slides():
+    """Copies all files from the download folder to the slides folder"""
+    copying = 1
+    print(LINE)
+    print("To which course would you like to add the files sir?")
+    list_courses()
+    print(LINE)
+    course_to = input("Enter command: ")
+    for x in COURSES:
+        if x == course_to:
+            COURSES[x].copy_from_download()
+            copying = 0
+    if copying == 1:
+        print("Sorry no course named '" + course_to + "' found.")
+        copy_to_slides()
+
 def work_on_course():
     working = 1
     while working == 1:
@@ -118,11 +135,13 @@ while True:
     user_in = input("Enter command: ")
     if user_in == "l":
         list_courses()
-    elif user_in == "c":
+    elif user_in == "n":
         create_course()
     elif user_in == "w":
 # opens note file and slides
         work_on_course()
+    elif user_in == "c":
+        copy_to_slides()
     elif user_in  == "q":
         goodbye()
     else:

@@ -23,11 +23,14 @@ class Course:
 
     def new_course(self):
         """Create the course folders notes, slides"""
-        os.mkdir(self.directory)
-        os.mkdir(self.directory + "/notes")
-        os.mkdir(self.directory + "/slides")
+        if os.path.exists(self.directory) == False:
+            os.mkdir(self.directory)
+        if os.path.exists(self.directory + "/notes") == False:
+            os.mkdir(self.directory + "/notes")
+        if os.path.exists(self.directory + "/slides") == False:
+            os.mkdir(self.directory + "/slides")
 
-        header_file = open(os.getcwd() + "/course_layout.md", "r")
+        header_file = open(os.path.dirname(os.path.realpath(__file__)) + "/course_layout.md", "r")
         header = header_file.read()
         header_file.close()
 
@@ -59,9 +62,10 @@ class Course:
             if all_files == []:
                 print("No files found in /slides.")
             else:
-                for x in all_files:
-                    slidefile = self.slides_folder + "/" + x
-                    subprocess.call(["open", slidefile])
+                subprocess.call(["open", " ".join(all_files)])
+#                for x in all_files:
+#                    slidefile = self.slides_folder + "/" + x
+#                    subprocess.call(["open", slidefile])
         else:
             print("No slides folder found!")
             os.mkdir(self.slides_folder)
@@ -74,4 +78,12 @@ class Course:
 
     def copy_from_download(self):
         """Copys all files from download folder to slides"""
-        pass
+        downloadfolder = os.getenv("HOME") + "/Downloads"
+        for x in os.listdir(downloadfolder):
+            if x.startswith(".") == False:
+                print(x + " was copied to " + self.slides_folder)
+                file_from = downloadfolder + "/" + x
+                file_to = self.slides_folder + "/" + x
+                subprocess.call(["cp", file_from, file_to])
+
+
