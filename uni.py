@@ -60,6 +60,7 @@ def update_folders():
 
 
 def list_courses():
+    """Prints all course folders"""
     print(LINE)
     if COURSE_FOLDERS == []:
         print("No courses have been defined yet.")
@@ -67,6 +68,36 @@ def list_courses():
         for x in COURSE_FOLDERS:
             print(x)
 
+def unknown_command():
+    print(LINE)
+    print("Sorry I don't know that command sir.")
+    print(OPTION_LIST)
+
+def create_course():
+    print(LINE)
+    print("Which course would you like to add?")
+    COURSE_NAME = input("Enter course name: ")
+    COURSES[COURSE_NAME] = course.Course(UNI_DIR, COURSE_NAME)
+    COURSES[COURSE_NAME].new_course()
+    update_folders()
+
+def work_on_course():
+    working = 1
+    while working == 1:
+        print(LINE)
+        print("Which course would you like to work on?")
+        list_courses()
+        print(LINE)
+        WORK_ON = input("Enter course name: ")
+        for x in COURSES:
+            if x == WORK_ON:
+                COURSES[x].work()
+                working = 0
+        if working == 1:
+            print("Sorry no course named '" + WORK_ON + "' found.")
+
+
+# Initial welcome message
 print(LINE)
 print("Welcome sir!")
 
@@ -80,37 +111,20 @@ COURSES = {}
 for x in COURSE_FOLDERS:
     COURSES[x] = course.Course(UNI_DIR, x)
 
+# Keep the program in a loop
 while True:
     print(LINE)
     print("How can I help you sir?")
-    USER_IN = input("Enter command: ")
-    if USER_IN == "l":
+    user_in = input("Enter command: ")
+    if user_in == "l":
         list_courses()
-    elif USER_IN == "c":
-        print(LINE)
-        print("Which course would you like to add?")
-        COURSE_NAME = input("Enter course name: ")
-        COURSES[COURSE_NAME] = course.Course(UNI_DIR, COURSE_NAME)
-        COURSES[COURSE_NAME].new_course()
-        update_folders()
-    elif USER_IN == "w":
-        while WORKING == 1:
-            print(LINE)
-            print("Which course would you like to work on?")
-            list_courses()
-            print(LINE)
-            WORK_ON = input("Enter course name: ")
-            for x in COURSES:
-                if x == WORK_ON:
-                    COURSES[x].work()
-                    WORKING = 0
-            if WORKING == 1:
-                print("Sorry no course named '" + WORK_ON + "' found.")
-    elif USER_IN == "q":
+    elif user_in == "c":
+        create_course()
+    elif user_in == "w":
+# opens note file and slides
+        work_on_course()
+    elif user_in  == "q":
         goodbye()
     else:
-        print(LINE)
-        print("Sorry I don't know that command sir.")
-        print(OPTION_LIST)
-
+        unknown_command()
 

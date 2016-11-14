@@ -14,6 +14,7 @@ class Course:
         self.name = name
         Course.directory = home_directory + "/" + name
         Course.note_file = Course.directory + "/notes/" + name + ".md"
+        Course.slides_folder = Course.directory + "/slides"
 
     def current_time(self):
         now = datetime.datetime.now()
@@ -34,7 +35,7 @@ class Course:
         note_in.write(header.format(self.name.title(), self.current_time()))
         note_in.close()
 
-    def work(self):
+    def take_notes(self):
         """Appends date and time to notes file and opens it using VIM"""
         work_layout_file = open(os.getcwd() + "/work_layout.md", "r")
         header = work_layout_file.read()
@@ -50,6 +51,26 @@ class Course:
             note_file.close()
 
         subprocess.call(["vim", self.note_file])
+
+    def open_slides(self):
+        """Opens all files in slides folder"""
+        if os.path.exists(self.slides_folder) == True:
+            all_files = os.listdir(self.slides_folder)
+            if all_files == []:
+                print("No files found in /slides.")
+            else:
+                for x in all_files:
+                    slidefile = self.slides_folder + "/" + x
+                    subprocess.call(["open", slidefile])
+        else:
+            print("No slides folder found!")
+            os.mkdir(self.slides_folder)
+            print(self.slides_folder + " created.")
+            print("I created one sir!")
+
+    def work(self):
+        self.open_slides()
+        self.take_notes()
 
     def copy_from_download(self):
         """Copys all files from download folder to slides"""
