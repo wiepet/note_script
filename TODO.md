@@ -1,23 +1,16 @@
 # TODO
--------------------------------------------------------------------------------
+===
 
-# 3 different modes: Show courses, vim and open slides
--------------------------------------------------------------------------------
-
-## General
--------------------------------------------------------------------------------
+General
+---
 - make a selection menu with numbers, to quickly open course notes
+- maybe add cmd + args
 
-## Courses
--------------------------------------------------------------------------------
+Courses
+---
 - copy files to slides
 
-## Work
--------------------------------------------------------------------------------
+Work
+---
 - create menu to choose notes, slides or both
-### Notes
--
 
-### Slides
-- open all files in slides folder
- 
