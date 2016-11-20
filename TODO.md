@@ -3,6 +3,8 @@
 
 General
 ---
+- !!! Program broken: Change methods to not use globals, but input var and 
+return VAR!!
 - make a selection menu with numbers, to quickly open course notes
 - maybe add cmd + args
 

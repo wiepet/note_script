@@ -19,24 +19,24 @@ OPTION_LIST = """\
 [q] - quit program"""
 
 
-def start():
+def start(uni_path):
     """Initiate program.
 
     Also checks if the uni directory exists."""
-    if os.path.exists(UNI_DIR):
+    if os.path.exists(uni_path):
         pass
     else:
         print("""It appears your uni folder does not exist.
         Would you like to create one?[y/n]""")
         user_in = input("Enter command: ")
         if user_in == "y":
-            os.mkdir(UNI_DIR)
+            os.mkdir(uni_path)
         elif user_in == "n":
             print("As you wish sir. Goodbye!")
             sys.exit()
         else:
             print("Sorry please answer with [y]es or [n]o!")
-            start()
+            start(uni_path)
 
 def goodbye():
     """Prompt for quitiing."""
@@ -53,6 +53,7 @@ def goodbye():
 
 def update_folders():
     """Selects all non hidden folders"""
+    global COURSE_FOLDERS
     ALL_FOLDERS = os.listdir(UNI_DIR)
     COURSE_FOLDERS[:] = []
     for x in ALL_FOLDERS:
@@ -137,7 +138,7 @@ while True:
         list_courses()
     elif user_in == "n":
         create_course()
-    elif user_in == "w":
+    elif user_in == "o":
 # opens note file and slides
         work_on_course()
     elif user_in == "c":
